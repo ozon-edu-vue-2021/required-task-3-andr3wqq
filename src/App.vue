@@ -1,8 +1,11 @@
 <template>
     <div id="app">
         <div class="office">
-            <Map />
-            <SideMenu />
+            <Map
+                v-on:update:table-id="handleTableClick"/>
+            <SideMenu :is-user-opened="isUserOpened"
+                      v-on:update:is-user-opened="isUserOpened = $event"
+                      :person="person"/>
         </div>
     </div>
 </template>
@@ -10,13 +13,30 @@
 <script>
 import Map from "./components/Map.vue";
 import SideMenu from "./components/SideMenu.vue";
+import people from "@/assets/data/people.json";
 
 export default {
-  name: "App",
-  components: {
-    Map,
-    SideMenu,
-  },
+    name: "App",
+    components: {
+        Map,
+        SideMenu,
+    },
+    data() {
+        return {
+            tableId: null,
+            isUserOpened: false,
+            person: null,
+        };
+    },
+    methods: {
+        handleTableClick(tableId) {
+            const person = people.find((p) => p.tableId === tableId);
+            if (person) {
+                this.person = person;
+                this.isUserOpened = true;
+            }
+        },
+    },
 };
 </script>
 
