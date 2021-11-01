@@ -72,7 +72,6 @@ import PersonCard from "./SideMenu/PersonCard.vue";
 import legend from "@/assets/data/legend.json";
 import { Doughnut as PieChart } from "vue-chartjs";
 import Draggable from "vuedraggable";
-import ClickOutside from "vue-click-outside";
 
 export default {
     props: {
@@ -91,9 +90,6 @@ export default {
         Draggable,
         PieChart
     },
-    directives: {
-        ClickOutside,
-    },
     data() {
         return {
             legend: [],
@@ -110,6 +106,7 @@ export default {
             this.legend = legend;
         },
         closeProfile() {
+            this.$emit('update:person', null);
             this.$emit('update:is-user-opened', false);
         },
         drawChart() {

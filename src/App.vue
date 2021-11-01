@@ -5,7 +5,8 @@
                 v-on:update:table-id="handleTableClick"/>
             <SideMenu :is-user-opened="isUserOpened"
                       v-on:update:is-user-opened="isUserOpened = $event"
-                      :person="person"/>
+                      :person="person"
+                      v-click-outside="handleOutsideClick"/>
         </div>
     </div>
 </template>
@@ -14,12 +15,16 @@
 import Map from "./components/Map.vue";
 import SideMenu from "./components/SideMenu.vue";
 import people from "@/assets/data/people.json";
+import ClickOutside from "vue-click-outside";
 
 export default {
     name: "App",
     components: {
         Map,
         SideMenu,
+    },
+    directives: {
+        ClickOutside,
     },
     data() {
         return {
@@ -34,6 +39,14 @@ export default {
             if (person) {
                 this.person = person;
                 this.isUserOpened = true;
+            }
+        },
+        handleOutsideClick(event) {
+            if (event.target.nodeName === 'svg'
+                || (event.target.getAttribute('class') !== 'wrapper-table')
+                || !this.$el.contains(event.target)) {
+                this.person = null;
+                this.isUserOpened = false;
             }
         },
     },

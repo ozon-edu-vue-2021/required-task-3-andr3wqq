@@ -69,7 +69,10 @@ export default {
                     .append('g')
                     .attr('transform', `translate(${table.x}, ${table.y}) scale(0.5)`)
                     .attr('id', table._id)
-                    .classed('employer-place', true);
+                    .classed('employer-place', true)
+                    .on('click', () => {
+                        this.$emit('update:table-id', table._id);
+                    });
 
                 // устанавливает стол в группу
                 targetSeat
@@ -83,10 +86,7 @@ export default {
                         'fill',
                         legend.find((it) => it.group_id === table.group_id)?.color ??
                         'transparent'
-                    )
-                    .on('click', () => {
-                        this.$emit('update:table-id', table._id);
-                    });
+                    );
             });
         },
     },
