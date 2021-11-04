@@ -101,6 +101,11 @@ export default {
     mounted() {
         this.drawChart();
     },
+    updated() {
+        if (this.$refs.chart) {
+            this.drawChart();
+        }
+    },
     methods: {
         loadLegend() {
             this.legend = legend;
